@@ -1,0 +1,80 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <body class="bg-dark">
+
+        <div class="container">
+            <div class="card card-register mx-auto mt-5">
+                <div class="card-header">Register an Account</div>
+                <div class="card-body">
+
+                    {{ form_start(form)}}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    {{ form_row(form.name) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    {{ form_row(form.username) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            {{ form_row(form.email) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    {{ form_row(form.password.first) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    {{ form_row(form.password.second) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            {{ form_row(form.fkEntreprise) }}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">S'inscrire !</button>
+                    
+                    
+                    <div id="aide2" class="form-group">
+                        
+                        <li id="cara">8 caractére minimum</li>
+                        <li id="chiffre">1 chiffre </li>
+                        <li id="maj">1majuscule</li>
+                        <li id="caraSpec">1 caractére spécial</li>
+                        
+                    </div>
+                    {{ form_end(form) }}
+
+                    <div class="text-center">
+                        <a class="d-block small mt-3" href="{{path('security_login')}}">Login Page</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    {%endblock%}
+
+
+

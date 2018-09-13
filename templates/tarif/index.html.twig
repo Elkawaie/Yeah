@@ -1,0 +1,178 @@
+
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Pramétres des Tarifs{% endblock %}
+
+{% block body %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+
+
+        {% for entreprise in entreprises %}              
+            {% if loop.first %}
+                <a class="navbar-brand" href="{{ path('index',  {'id': entreprise.id}) }}">{{entreprise.nom}}</a>
+            {%endif%}            
+        {%endfor%} 
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    {% for entreprise in entreprises %}                          
+                        {% if loop.first %}
+                            <a class="nav-link" href="{{ path('entreprise_edit',  {'id': entreprise.id}) }}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-cog"></i>
+                        <span class="nav-link-text">Paramétre de l'entreprise</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    {% for entreprise in entreprises %}                          
+                        {% if loop.first %}
+                            <a class="nav-link" href="{{ path('tarif_index',  {'id':entreprise.id}) }}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Tarif</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% for entreprise in entreprises %}                          
+                        {% if loop.first %}
+                            <a class="nav-link" href="{{ path('tva_index', {'id':entreprise.id})}}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-fw fa-area-chart"></i>       
+                        <span class="nav-link-text">Tva</span>          
+                    </a>
+                </li>  
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="
+                       {% if app.user %}
+                           {% set id = app.user.id %}
+                           {% for entreprise in entreprises %}
+                               {{ path('index', {'id': entreprise.id}) }}
+                           {%endfor%}
+                       {%endif%}"
+                       class="nav-link" >
+                        <i class="fa fa-fw fa-dashboard"></i>                     
+                        Dashboard de 
+                        {% if app.user %}
+                            {% set id = app.user.id %}
+                            {% for entreprise in entreprises %}
+                                {{entreprise.nom}}
+                            {%endfor%}
+                        {%endif%}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Paramétres</a>
+                </li>
+                <li class="breadcrumb-item active">Tarif</li>
+            </ol>
+            <!-- Example DataTables Card-->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Liste Tarif</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Valeur</th>
+                                    <th>Nature du Tarif</th>
+                                    <th>Mettre a jour le Tarif</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Valeur</th>
+                                    <th>Nature du Tarif</th>
+                                    <th>Mettre a jour le Tarif</th>
+
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for tarif in tarifs %}
+                                    {% for entreprise in tarif.fkEntrepriseTarif %}
+                                        {% if entreprise.id == idEntreprise %}
+                                            <tr>
+                                                <td>{{ tarif.designation }}</td>
+                                                <td>{{ tarif.valeur }}</td>
+                                                <td>{{ tarif.tarifHoraire ? 'Horaire' : 'Forfaitaire' }}</td>
+                                                <td>
+                                                    {% for entreprise in entreprises %}
+                                                        <a href="{{ path('tarif_edit', {'id': tarif.id, 'idEntreprise':entreprise.id }) }}">Mettre à jour</a>
+                                                    {%endfor%}
+                                                </td>   
+                                            </tr>
+                                        {%endif%} 
+                                    {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <a href="{{ path('tarif_new', {'idEntreprise':app.request.query.get("id") })}}">Nouveau Tarif</a>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Derniére Update</div>
+            </div>
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                     <small>Copyright Yeah | Développé par Max |</small> <a href="{{ path('mention_legales')}}" target="_blank"> Mentions Legales</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="{{ path('security_logout')}}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,228 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}New Evenements{% endblock %}
+
+{% block body %}
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+
+        {% for entreprise in entreprises %}              
+            {% if loop.first %}
+                <a class="navbar-brand" href="{{ path('index',  {'id': entreprise.id}) }}">{{ entreprise.nom}}</a>
+            {%endif%}            
+        {%endfor%} 
+
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    {% for entreprise in entreprises %}
+                        {% if loop.first %} 
+                            <a class="nav-link" href="{{ path('index',  {'id': entreprise.id}) }}">
+                            {%endif%}
+                        {%endfor%}                   
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    {% for entreprise in entreprises %}  
+                        {% if loop.first %}   
+                            <a class="nav-link" href="{{ path('evenements_index', {'id': entreprise.id})}}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">CRM</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% for entreprise in entreprises %}  
+                        {% if loop.first %}   
+                            <a class="nav-link" href="{{ path('evenements_planning', {'id': entreprise.id})}}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-fw fa-area-chart"></i>       
+                        <span class="nav-link-text">Planning</span>          
+                    </a>
+                </li>  
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+
+                    <a class="nav-link" href="">
+
+                        <i class="fa fa-fw fa-bar-chart-o"></i>
+                        <span class="nav-link-text">Finance</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="
+                       {% if app.user %}
+                           {% set id = app.user.id %}
+                           {% for entreprise in entreprises %}
+
+                               {{ path('entreprise_edit', {'id': entreprise.id}) }}
+                           {%endfor%}
+                       {%endif%}"
+                       class="nav-link" >
+                        <i class="fa fa-cog "></i>                     
+                        Paramétres de 
+                        {% if app.user %}
+                            {% set id = app.user.id %}
+                            {% for entreprise in entreprises %}
+                                {{entreprise.nom}}
+                            {%endfor%}
+                        {%endif%}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Prise de rendez-vous</div>
+            <div class="card-body">
+
+                {{ form_start(form)}}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.fkEntreprise) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.fkClient) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.startDate) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.endDate) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.titre) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_row(form.description) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-label-group">
+                                {{ form_row(form.fkTarif) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">                               
+                            {% if evenement.fkTarif.tarifHoraire == true %}
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        {{ form_row(form.quantite, { 'label_attr':{'type': 'number_format'} }) }}
+                                    </div>
+                                </div>
+                            {%endif%}
+                            {% if evenement.fkTarif.tarifHoraire == false %}
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        {{ form_row(form.total, { 'label_attr':{'type': 'number_format'} }) }}
+                                    </div>
+                                </div>
+                            {%endif%}
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    {{ form_row(form.fkTva) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">      
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                {{ include('evenements/_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                    {% for entreprise in entreprises %}
+
+                        <a href="{{ path('evenements_index', {'id': entreprise.id} ) }}">Retour a la liste des clients</a>
+                    {%endfor%}
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                   <small>Copyright Yeah | Développé par Max |</small> <a href="{{ path('mention_legales')}}" target="_blank"> Mentions Legales</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{{ path('security_logout')}}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

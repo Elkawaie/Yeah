@@ -1,0 +1,231 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        {% if app.user %}
+            {% set id = app.user.id %}
+            {% for entreprise in entreprises %}
+                {% for user in entreprise.fkUser %}
+                    {% if id == user.id %}
+                        <a class="navbar-brand" href="">{{entreprise.nom}}</a>
+                    {%endif%}
+                {%endfor%}
+            {%endfor%}
+        {%endif%}
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    {% if app.user %}
+                        {% set id = app.user.id %}
+                        {% for entreprise in entreprises %}
+                            {% for user in entreprise.fkUser %}
+                                {% if id == user.id  %}                                   
+                                    <a class="nav-link" href="{{ path('evenements_index',  {'id': entreprise.id}) }}">
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%endif%}
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">CRM</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% if app.user %}
+                        {% set id = app.user.id %}
+                        {% for entreprise in entreprises %}
+                            {% for user in entreprise.fkUser %}
+                                {% if id == user.id  %}                                    
+                                    <a class="nav-link" href="{{ path('evenements_planning', {'id': entreprise.id})}}">
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%endif%}
+                        <i class="fa fa-fw fa-area-chart"></i>
+                        <span class="nav-link-text">Planning</span>
+                    </a>
+                </li>  
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% if app.user %}
+                        {% set id = app.user.id %}
+                        {% for entreprise in entreprises %}
+                            {% for user in entreprise.fkUser %}
+                                {% if id == user.id  %}          
+                                    <a class="nav-link" href="{{ path('evenements_finance', {'id': entreprise.id}) }}">
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%endif%}
+                        
+                        <i class="fa fa-fw fa-bar-chart-o"></i>
+                        <span class="nav-link-text">Finance</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href=" {% if app.user %}
+                       {% set id = app.user.id %}
+                       {% for entreprise in entreprises %}
+                           {% for user in entreprise.fkUser %}
+                               {% if id == user.id  %}  
+                                   {{ path('entreprise_edit', {'id': entreprise.id}) }}
+                               {%endif%}
+                           {%endfor%}
+                       {%endfor%}
+                       {%endif%}"
+                           class="nav-link" >
+                           <i class="fa fa-cog "></i>                     
+                           Paramétres de 
+                           {% if app.user %}
+                               {% set id = app.user.id %}
+                               {% for entreprise in entreprises %}
+                                   {% for user in entreprise.fkUser %}
+                                       {% if id == user.id  %}  
+                                           {{entreprise.nom}}
+                                       {%endif%}
+                                   {%endfor%}
+                               {%endfor%}
+                           {%endif%}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">My Dashboard</li>
+                </ol>
+                <!-- Icon Cards-->
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-bar-chart"></i> Planning</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="container-fluid" id="calendar-holder-dash">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> Client</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Date de naissance</th>
+                                                <th>Adresse</th>
+                                                <th>Code Postal</th>
+                                                <th>Ville</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>                                           
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Date de naissance</th>
+                                                <th>Adresse</th>
+                                                <th>Code Postal</th>
+                                                <th>Ville</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                {%if app.user%}
+                                                    {% set id = app.user.id %}    
+                                                        {% for client in clients %}
+                                                                                                                             
+                                                                    <td>{{client.nom}}</td>
+                                                                    <td>{{client.prenom}}</td>
+                                                                    <td>{{client.date_naissance|date("d/m/Y")}}</td>
+                                                                    <td>{{client.adresse}}</td>
+                                                                    <td>{{client.code_postal}}</td>
+                                                                    <td>{{client.ville}}</td>
+
+                                                                </tr>
+                                                           
+                                                        {%endfor%}
+                                                    
+                                            {%endif%}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                        
+                <!-- /.container-fluid-->
+                <!-- /.content-wrapper-->
+                <footer class="sticky-footer">
+                    <div class="container">
+                        <div class="text-center">
+                           <small>Copyright Yeah | Développé par Max |</small> <a href="{{ path('mention_legales')}}" target="_blank"> Mentions Legales</a>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+                <!-- Logout Modal-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button href="" class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="{{ path('security_logout')}}">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}
+
+

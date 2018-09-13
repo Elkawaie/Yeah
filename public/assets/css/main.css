@@ -1,0 +1,37 @@
+
+.accueil{
+    background-color: yellow;
+}
+
+.BtnDiv{
+  margin-top:16pt;  
+}
+
+.Btnentreprise {
+   
+    background-color:#B38867;
+    padding:25px 200px;
+    
+}
+
+.Btnnewentreprise{
+    margin-top:16pt;
+    background-color: #DDBC95;
+    
+   
+}
+
+.Btnentreprise a{
+   text-decoration:none;
+   color:black;
+}
+
+.Btnnewentreprise a {
+   text-decoration:none;
+   color:black;
+}
+
+#aide2 {
+            visibility: hidden;
+            color: red;
+        }

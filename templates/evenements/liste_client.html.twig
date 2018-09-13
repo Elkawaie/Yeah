@@ -1,0 +1,188 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}CRM{% endblock %}
+
+{% block body %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        {% for entreprise in entreprises %}              
+            {% if loop.first %}
+                <a class="navbar-brand" href="{{ path('index',  {'id': entreprise.id}) }}">{{ entreprise.nom}}</a>
+            {%endif%}            
+        {%endfor%} 
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    {% for evenement in evenements %}
+                        {% if loop.first %} 
+                            <a class="nav-link" href="{{ path('index',  {'id': evenement.fkEntreprise.id}) }}">
+                            {%endif%}
+                        {%endfor%}                   
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">CRM</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% for evenement in evenements %}  
+                        {% if loop.first %}   
+                            <a class="nav-link" href="{{ path('evenements_planning', {'id': evenement.fkEntreprise.id})}}">
+                            {%endif%}
+                        {%endfor%}
+                        <i class="fa fa-fw fa-area-chart"></i>       
+                        <span class="nav-link-text">Planning</span>          
+                    </a>
+                </li>  
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    {% for entreprise in entreprises %}            
+                    <a class="nav-link" href="{{ path('evenements_finance', {'id': entreprise.id}) }}">
+                        {%endfor%}
+                        <i class="fa fa-fw fa-bar-chart-o"></i>
+                        <span class="nav-link-text">Finance</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="
+                       {% if app.user %}
+                           {% set id = app.user.id %}
+                           {% for entreprise in entreprises %} 
+                               {{ path('entreprise_edit', {'id': entreprise.id}) }}
+                           {%endfor%}
+                       {%endif%}"
+                       class="nav-link" >
+                        <i class="fa fa-cog "></i>                     
+                        Paramétres de 
+                        {% if app.user %}
+                            {% set id = app.user.id %}
+                            {% for entreprise in entreprises %}
+                                {{entreprise.nom}}
+                            {%endfor%}
+                        {%endif%}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">CRM</li>
+            </ol>
+            <!-- Example DataTables Card-->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Liste Client</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Date de naissance</th>
+                                    <th>Adresse</th>
+                                    <th>Code Postal</th>
+                                    <th>Ville</th>
+                                    <th>Editer le client</th>
+                                    <th>Nouveau Rendez-vous</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Date de naissance</th>
+                                    <th>Adresse</th>
+                                    <th>Code Postal</th>
+                                    <th>Ville</th>
+                                    <th>Editer le client</th>
+                                    <th>Nouveau Rendez-vous</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>         
+                                    {% for client in clients %}
+                                        
+                                        <td>{{client.nom}}</td>
+                                        <td>{{client.prenom}}</td>
+                                        <td>{{client.date_naissance|date("d/m/Y")}}</td>
+                                        <td>{{client.adresse}}</td>
+                                        <td>{{client.code_postal}}</td>
+                                        <td>{{client.ville}}</td>
+                                        
+                                        <td> <a href="{{ path('clients_edit', {'id': client.0, 'idEntreprise' : app.request.get('id') }) }}">Mettre à jour</a></td>
+                                        <td> <a href="{{ path('evenements_flow', {'id': app.request.get("id"), 'idClient': client.fk_client_id } )}}">Nouveau  RDV</a></td>                                         
+                                    </tr>                                
+                                {%endfor%} 
+                            </tbody>
+                        </table>
+                        {% for evenement in evenements %}
+                            {% if loop.first %}
+                                <a href="{{ path('clients_new', {'id': evenement.fkEntreprise.id })}}">Nouveau Client</a>
+                            {%endif%}
+                        {%endfor%}
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                     <small>Copyright Yeah | Développé par Max |</small> <a href="{{ path('mention_legales')}}" target="_blank"> Mentions Legales</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="{{ path('security_logout')}}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
