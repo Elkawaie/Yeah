@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/Yeah/templates/security/login.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/RegistrationController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/fichierPdf/pdf.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/SecurityController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/register.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/base.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/entreprise/dashboard.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/config/packages/knp_snappy.yml</file>
+            <file>file:/C:/wamp64/www/Yeah/config/services.yaml</file>
+            <file>file:/C:/wamp64/www/Yeah/config/packages/knp_snappy.yaml</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/evenements/liste_client.html.twig</file>
             <file>file:/C:/wamp64/www/Yeah/src/Controller/EvenementsController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/index/index.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/clients/edit.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/IndexController.php</file>
+            <file>file:/C:/wamp64/www/Yeah/bin/console</file>
+            <file>file:/C:/wamp64/www/Yeah/.env</file>
         </group>
     </open-files>
 </project-private>
