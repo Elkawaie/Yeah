@@ -5,7 +5,8 @@
 {% block body %}
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        {% for entreprise in entreprises %}              
+        {% for entreprise in entreprises %}        
+             {%dump(entreprises)%}
             {% if loop.first %}
                 <a class="navbar-brand" href="{{ path('index',  {'id': entreprise.id}) }}">{{ entreprise.nom}}</a>
             {%endif%}            
@@ -135,7 +136,7 @@
                                         <td>{{client.ville}}</td>
                                         
                                         <td> <a href="{{ path('clients_edit', {'id': client.0, 'idEntreprise' : app.request.get('id') }) }}">Mettre à jour</a></td>
-                                        <td> <a href="{{ path('evenements_flow', {'id': app.request.get("id"), 'idClient': client.fk_client_id } )}}">Nouveau  RDV</a></td>                                         
+                                        <td> <a href="{{ path('evenements_flow', {'id': app.request.get("id"), 'idClient': client.0 } )}}">Nouveau  RDV</a></td>                                         
                                     </tr>                                
                                 {%endfor%} 
                             </tbody>
