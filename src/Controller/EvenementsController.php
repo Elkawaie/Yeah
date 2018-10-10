@@ -190,6 +190,7 @@ class EvenementsController extends Controller {
     {
 
         $idEntreprise = $request->get('id');
+       
 
 
         return $this->render('evenements/liste_client.html.twig', ['evenements' => $evenementsRepository->findBy(

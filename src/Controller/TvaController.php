@@ -32,6 +32,8 @@ class TvaController extends Controller {
          */
         public function new(Request $request, EntrepriseRepository $entrepriseRepository): Response
         {
+        $id = $request->get('id');
+        dump($id);
         $tva = new Tva();
         $form = $this->createForm(TvaType::class, $tva);
         $form->handleRequest($request);
@@ -41,7 +43,7 @@ class TvaController extends Controller {
         $em->persist($tva);
         $em->flush();
 
-        return $this->redirectToRoute('tva_index');
+        return $this->redirectToRoute('tva_index', ['id' => $id]);
         }
 
         return $this->render('tva/new.html.twig', [

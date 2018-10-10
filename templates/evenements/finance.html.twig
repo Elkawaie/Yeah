@@ -108,7 +108,7 @@
                             <tfoot>
                                 <tr>
                                     <td>Vos Rendez-vous du mois</td>
-                                    <td>Total HT : {% for tarifs in tarif %} {{tarifs[0]}} {% endfor %} €</td>
+                                    <td>Total HT : {% for tarifs in tarif %}  {% dump(tarifs)%}{% if tarifs[0] is null %} {%dump(evenements)%} {{evenements[0][4]}} {%endif%} {{tarifs[0]}} {% endfor %} €</td>
                                     <td>Facture</td>                                   
                                 </tr>   
                             </tfoot>
