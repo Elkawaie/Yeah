@@ -3,16 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/Yeah/templates/security/login.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/RegistrationController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/fichierPdf/pdf.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/SecurityController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/register.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/base.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/entreprise/dashboard.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/src/Repository/EvenementsRepository.php</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/tarif/_delete_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/config/services.yaml</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/tarif/_form.html.twig</file>
             <file>file:/C:/wamp64/www/Yeah/src/Controller/EvenementsController.php</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/index/index.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/templates/clients/edit.html.twig</file>
-            <file>file:/C:/wamp64/www/Yeah/src/Controller/IndexController.php</file>
+            <file>file:/C:/wamp64/www/Yeah/bin/console</file>
+            <file>file:/C:/wamp64/www/Yeah/.env</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/entreprise/_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/tva/_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/base_dashboard.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/evenements/finance.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/clients/_delete_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/tva/_delete_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/public/assets/js/jsr_class.js</file>
+            <file>file:/C:/wamp64/www/Yeah/config/packages/knp_snappy.yml</file>
+            <file>file:/C:/wamp64/www/Yeah/src/Form/EvenementsAType.php</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/tva/new.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/clients/_form.html.twig</file>
+            <file>file:/C:/wamp64/www/Yeah/templates/entreprise/edit.html.twig</file>
         </group>
     </open-files>
 </project-private>

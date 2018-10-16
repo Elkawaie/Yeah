@@ -33,14 +33,17 @@ class EntrepriseController extends Controller
     public function dashboard(Request $request, EntrepriseRepository $entrepriseRepository, ClientsRepository $clientRepository, UserInterface $user): Response
     {
       
-       //$entreprise->getId();
-
-       $idEntreprise = $request->get('id');
-       
+       //$id = $request->getId();
+        
+      // $idEntreprise = $request->get('id');
+        
+        //Ici Grace a UserInterface je peux récupéré l'id de l'utilisateur connecté et ainsi récupéré par une requête SQL L'entreprise adéquat
+       $id = $user->getId();
+  
         
         return $this->render('entreprise/dashboard.html.twig', [
             'entreprises' => $entrepriseRepository->findAll(),
-            'clients' => $clientRepository->findByEntreprise($idEntreprise)
+            'clients' => $clientRepository->findByEntreprise($id)
                 ]);
     }
 
